@@ -27,7 +27,7 @@ function HomepageHeader() {
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
-            <Translate>Tutorial</Translate>
+            <Translate>Programming Guide</Translate>
           </Link>
         </div>
       </div>
@@ -38,7 +38,7 @@ function HomepageHeader() {
 export default function Home() {
   return (
     <Layout
-      title="Hello from Rush-Coder"
+      title="Home"
       description="Description will go into a meta tag in <head />">
       <HomepageHeader />
       <main>
