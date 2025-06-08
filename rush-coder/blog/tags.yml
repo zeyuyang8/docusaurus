@@ -1,4 +1,9 @@
 cuda:
   label: CUDA
   permalink: /cuda
-  description: CUDA
+  description: Learn CUDA programming
+
+syntax:
+  label: Syntax
+  permalink: /syntax
+  description: Syntax to write blog posts and pages

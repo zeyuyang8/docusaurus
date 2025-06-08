@@ -1,8 +1,9 @@
-// @ts-check
-// `@type` JSDoc annotations allow editor autocompletion and type checking
-// (when paired with `@ts-check`).
-// There are various equivalent ways to declare your Docusaurus config.
-// See: https://docusaurus.io/docs/api/docusaurus-config
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import {themes as prismThemes} from 'prism-react-renderer';
 
@@ -11,8 +12,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Rush Coder',
-  tagline: 'Let\'s rush!',
-  favicon: 'img/favicon.ico',
+  tagline: "Let's rush!",
+  favicon: 'img/rushlab.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -51,10 +52,15 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/zeyuyang8/docusaurus/rush-coder',
+            'https://github.com/zeyuyang8/docusaurus/tree/main/rush-coder/',
+          // Add math support to docs
+          remarkPlugins: [require('remark-math')],
+          rehypePlugins: [require('rehype-katex')],
         },
         blog: {
           showReadingTime: false,
+          blogSidebarTitle: 'All Posts',
+          blogSidebarCount: 'ALL',
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -62,11 +68,14 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/zeyuyang8/docusaurus/rush-coder',
+            'https://github.com/zeyuyang8/docusaurus/tree/main/rush-coder/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'warn',
+          // Add math support to blog
+          remarkPlugins: [require('remark-math')],
+          rehypePlugins: [require('rehype-katex')],
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -74,7 +83,18 @@ const config = {
       }),
     ],
   ],
-
+  // Add this plugins section
+  plugins: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        // `hashed` is recommended as long-term-cache of index file is possible.
+        hashed: true,
+        // Search for `docs` and `blog`
+        docsRouteBasePath: ['/docs', '/blog'],
+      },
+    ],
+  ],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -147,6 +167,16 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
     }),
+  // Add KaTeX CSS
+  stylesheets: [
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+      type: 'text/css',
+      integrity:
+        'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+      crossorigin: 'anonymous',
+    },
+  ],
 };
 
 export default config;
