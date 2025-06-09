@@ -7,3 +7,8 @@ syntax:
   label: Syntax
   permalink: /syntax
   description: Syntax to write blog posts and pages
+
+compression:
+  label: Compression
+  permalink: /compression
+  description: Compression algorithms
