@@ -11,7 +11,7 @@ Guide to implement Huffman coding using CUDA.
 
 import PasswordProtection from '../../../src/components/PasswordProtection';
 
-<!-- <PasswordProtection password=""> -->
+<PasswordProtection password="">
 
 ## Huffman Coding
 
@@ -778,6 +778,37 @@ while (4 + free_bits / 8 < BYTES_PER_THREAD) {
 
 **Coordination between threads in a block**
 
+Handle the coordination between threads in a block.
+
+- For thread 0 (the first thread in the block), it takes the block's starting position, and adds its own count `thread_counter` and store it in `accumulators[0]`, this gives us the starting position for the next block.
+- For all other threads, they simply store their individual `thread_counter` values, these values represent how many symbol each thread has decoded.
+- `__syncthreads()` ensures all threads have finished writing to `accumulators` before any thread proceeds to the next step.
+
+This is part of the parallel processing coordination where:
+
+- Each thread keeps track of how many symbols it decoded-
+- Thread 0 also tracks the starting position for the next block
+- These values will be used to determine where each thread writes its decoded data
+
+```cpp
+if (THREAD_ID == 0) {
+  accumulators[0] = position_offsets[BLOCK_ID] + thread_counter;
+} else {
+  accumulators[THREAD_ID] = thread_counter;
+}
+__syncthreads();
+```
+
+```cpp
+int i;
+for (i = 2; i <= N_THREADS; i <<= 1) {
+  if (((THREAD_ID + 1) & (i - 1)) == 0) {
+    accumulators[THREAD_ID] += accumulators[THREAD_ID - (i >> 1)];
+  }
+  __syncthreads();
+}
+```
+
 ## Profiling and Optimization
 
-<!-- </PasswordProtection> -->
+</PasswordProtection>
